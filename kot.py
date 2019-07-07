@@ -15,7 +15,7 @@ class Kot:
     options = Options()
     options.binary_location = os.environ['CHROME_PATH']
     options.add_argument('lang=en')
-    #options.add_argument('--headless')
+    options.add_argument('--headless')
     self.driver = webdriver.Chrome(chrome_options=options)
 
   def login(self):
