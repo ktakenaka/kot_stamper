@@ -15,7 +15,7 @@ class Kot:
     options = Options()
     options.binary_location = os.environ['CHROME_PATH']
     options.add_argument('lang=en')
-    options.add_argument('--headless')
+    #options.add_argument('--headless')
     self.driver = webdriver.Chrome(chrome_options=options)
 
   def login(self):
@@ -36,11 +36,11 @@ class Kot:
     Select(self.driver.find_element_by_id('recording_type_code_1')).select_by_visible_text('Clock-in')
     self.driver.find_element_by_id('recording_timestamp_time_1').send_keys(type(self).volatile_time(830))
     Select(self.driver.find_element_by_id('recording_type_code_2')).select_by_visible_text('Clock-out')
-    self.driver.find_element_by_id('recording_timestamp_time_2').send_keys(type(self).volatile_time(1900))
+    self.driver.find_element_by_id('recording_timestamp_time_2').send_keys(type(self).volatile_time(1830))
     self.driver.find_element_by_id('button_01').click()
 
     # Confirm success
-    if self.driver.current_url == url_after_login:
+    if url_after_login.startswith(self.driver.current_url):
       return 'Stamp Success: {}'.format(self.kot_date)
     return 'Something Wrong: {}'.format(self.kot_date)
 
