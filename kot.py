@@ -3,11 +3,14 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import Select
 import random
+from datetime import datetime, date, time, timedelta
 
 class Kot:
   LOGIN_URL = 'https://s3.kingtime.jp/admin'
   HOLIDAYS = ['Sat', 'Sun']
   HOLIDAY_CLASS = ['htBlock-scrollTable_sunday', 'htBlock-scrollTable_saturday']
+  BASETIME_START = datetime.combine(date.today(), time(hour=8, minute=30))
+  BASETIME_FINISH = datetime.combine(date.today(), time(hour=19))
 
   def __init__(self):
     self.id = os.environ['KOT_ID']
@@ -39,9 +42,9 @@ class Kot:
 
     # Stamp attendance
     Select(self.driver.find_element_by_id('recording_type_code_1')).select_by_visible_text('Clock-in')
-    self.driver.find_element_by_id('recording_timestamp_time_1').send_keys(type(self).volatile_time(830))
+    self.driver.find_element_by_id('recording_timestamp_time_1').send_keys(type(self).volatile_time(self.BASETIME_START))
     Select(self.driver.find_element_by_id('recording_type_code_2')).select_by_visible_text('Clock-out')
-    self.driver.find_element_by_id('recording_timestamp_time_2').send_keys(type(self).volatile_time(1830))
+    self.driver.find_element_by_id('recording_timestamp_time_2').send_keys(type(self).volatile_time(self.BASETIME_FINISH))
     self.driver.find_element_by_id('button_01').click()
 
     # Confirm success
@@ -65,4 +68,4 @@ class Kot:
 
   @classmethod
   def volatile_time(cls, time):
-    return time + random.randrange(-20, 20)
+    return (time + timedelta(minutes = random.randrange(-20, 20))).strftime('%H%M')
