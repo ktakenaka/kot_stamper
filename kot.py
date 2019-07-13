@@ -42,14 +42,16 @@ class Kot:
 
     # Stamp attendance
     Select(self.driver.find_element_by_id('recording_type_code_1')).select_by_visible_text('Clock-in')
-    self.driver.find_element_by_id('recording_timestamp_time_1').send_keys(type(self).volatile_time(self.BASETIME_START))
+    start_time = type(self).volatile_time(self.BASETIME_START)
+    self.driver.find_element_by_id('recording_timestamp_time_1').send_keys(start_time)
     Select(self.driver.find_element_by_id('recording_type_code_2')).select_by_visible_text('Clock-out')
-    self.driver.find_element_by_id('recording_timestamp_time_2').send_keys(type(self).volatile_time(self.BASETIME_FINISH))
+    finish_time = type(self).volatile_time(self.BASETIME_FINISH)
+    self.driver.find_element_by_id('recording_timestamp_time_2').send_keys(finish_time)
     self.driver.find_element_by_id('button_01').click()
 
     # Confirm success
     if url_after_login.startswith(self.driver.current_url):
-      return 'Stamp Success: {}'.format(self.kot_date)
+      return 'Stamp Success: {}\nstart: {}, finish: {}'.format(self.kot_date, start_time, finish_time)
     return 'Something Wrong: {}'.format(self.kot_date)
 
   # TODO: Create table object

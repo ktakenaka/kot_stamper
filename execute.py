@@ -10,6 +10,6 @@ stamper = Kot()
 try:
   stamper.login()
   result = stamper.stamp(target_day)
-  client.api_call('chat.postMessage', channel='general', text='Stamp Attendance \n{}'.format(result))
+  client.api_call('chat.postMessage', channel='general', username='Stamp Attendance', text=result)
 except:
-  client.api_call('chat.postMessage', channel='general', text='Stamp Attendance \nFailed: Day {}'.format(target_day))
+  client.api_call('chat.postMessage', channel='general', username='Stamp Attendance', text='Failed: {}'.format(target_day))
