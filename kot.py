@@ -52,6 +52,7 @@ class Kot:
       return 'Stamp Success: {}'.format(self.kot_date)
     return 'Something Wrong: {}'.format(self.kot_date)
 
+  # TODO: Create table object
   def target_row(self, day):
     table = self.driver.find_element_by_class_name('htBlock-adjastableTableF').find_element_by_tag_name('tbody')
     return table.find_elements_by_tag_name('tr')[day-1]
