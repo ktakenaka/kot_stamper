@@ -60,6 +60,7 @@ class Kot:
     return table.find_elements_by_tag_name('tr')[day-1]
 
   def holiday(self, row):
+    if row.find_element_by_class_name('work_day_type').element.text != "平日": return True
     element = row.find_element_by_class_name('htBlock-scrollTable_day')
     self.kot_date = element.text
     if any([holiday in self.kot_date for holiday in self.HOLIDAYS]):
